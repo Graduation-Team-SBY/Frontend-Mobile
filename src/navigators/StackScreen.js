@@ -7,7 +7,7 @@ import LandingPage from '../screens/LandingPage';
 
 const Stack = createNativeStackNavigator();
 
-export default function StackScreen(props) {
+export default function StackScreen() {
   return (
     <>
       <SafeAreaProvider>
