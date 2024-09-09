@@ -43,7 +43,7 @@ export default function LoginScreen({ navigation }) {
         <TouchableHighlight style={styles.button} onPress={loginHandler}>
           <Text style={styles.buttonText}>Login</Text>
         </TouchableHighlight>
-        <TouchableHighlight style={styles.buttonAlt} onPress={() => { navigation.navigate("RegisterScreen") }} underlayColor={"#9ca3af"} activeOpacity={0.5}>
+        <TouchableHighlight style={styles.buttonAlt} onPress={() => { navigation.navigate("ClientRegister") }} underlayColor={"#9ca3af"} activeOpacity={0.5}>
           <Text style={styles.buttonTextAlt}>Create new account instead</Text>
         </TouchableHighlight>
       </View>
