@@ -10,7 +10,7 @@ export default function TabScreen(props) {
     <>
       <Tab.Navigator>
         <Tab.Screen name="HomeClientScreen" component={HomeClient} />
-        <Tab.Screen name="LogoutScreen" component={LogoutScreen} />
+        <Tab.Screen name="Logout" component={LogoutScreen} />
       </Tab.Navigator>
     </>
   );

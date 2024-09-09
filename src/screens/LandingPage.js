@@ -5,7 +5,7 @@ export default function LandingPage({ navigation }) {
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={{ fontSize: 24, fontWeight: 'bold' }}>YangTu</Text>
-        <TouchableHighlight style={styles.loginButton} onPress={() => navigation.navigate("LoginScreen")}>
+        <TouchableHighlight style={styles.loginButton} onPress={() => navigation.navigate("Login")}>
           <Text style={{ fontSize: 16, fontWeight: '600' }}>Login</Text>
         </TouchableHighlight>
       </View>
@@ -23,10 +23,10 @@ export default function LandingPage({ navigation }) {
           <View
             style={{ flexDirection: 'row', gap: 16, justifyContent: 'center' }}
           >
-            <TouchableHighlight style={styles.registerButton}>
+            <TouchableHighlight style={styles.registerButton} onPress={() => navigation.navigate("WorkerRegister")}>
               <Text style={styles.registerText}>Daftar Yasa</Text>
             </TouchableHighlight>
-            <TouchableHighlight style={styles.registerButton}>
+            <TouchableHighlight style={styles.registerButton} onPress={() => navigation.navigate("ClientRegister")}>
               <Text style={styles.registerText}>Daftar Jalu</Text>
             </TouchableHighlight>
           </View>
