@@ -1,13 +1,24 @@
 import { NavigationContainer } from '@react-navigation/native';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import StackScreen from './StackScreen';
+import { StyleSheet } from 'react-native';
 export default function MainStack(props) {
+  return (
+    <>
+      <SafeAreaProvider>
+        <SafeAreaView style={styles.safeArea}>
+          <NavigationContainer>
+            <StackScreen />
+          </NavigationContainer>
+        </SafeAreaView>
+      </SafeAreaProvider>
+    </>
+  );
+}
 
-  return (<>
-    <SafeAreaProvider>
-      <NavigationContainer>
-        <StackScreen />
-      </NavigationContainer>
-    </SafeAreaProvider>
-  </>)
-};
+const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: 'white'
+  }
+})
