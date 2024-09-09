@@ -1,32 +1,22 @@
 import { StyleSheet, Text, TextInput, TouchableHighlight, View } from "react-native"
-import { useState, useContext } from "react"
+import { useState } from "react"
 import { instanceAxios as axios, instanceAxios } from "../config/axiosInstance"
-import * as SecureStore from "expo-secure-store"
-import { AuthContext } from "../contexts/auth"
-export default function LoginScreen({ navigation }) {
+
+export default function RegisterScreen({ navigate }) {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [isLoading, setIsLoading] = useState(false)
-  const { setIsSignedIn } = useContext(AuthContext)
-  const loginHandler = async () => {
+  const registerHandler = async () => {
     try {
+
       setIsLoading(true)
-      const { data } = await instanceAxios({
-        method: "POST",
-        url: "/login",
-        data: {
-          email,
-          password
-        }
-      })
-      await Promise.all([SecureStore.setItemAsync("access_token", data.access_token), SecureStore.setItemAsync("role", data.role)])
-      setIsSignedIn(true)
-    } catch (error) {
-      console.log(error)
+    } catch (err) {
+
     } finally {
       setIsLoading(false)
     }
   }
+
   return (
     <>
       <View style={styles.container}>
@@ -46,7 +36,6 @@ export default function LoginScreen({ navigation }) {
       </View>
     </>
   )
-
 };
 
 const styles = StyleSheet.create({

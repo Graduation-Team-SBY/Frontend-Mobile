@@ -1,11 +1,11 @@
 import { StyleSheet, Text, TouchableHighlight, View } from 'react-native';
 
-export default function LandingPage() {
+export default function LandingPage({ navigation }) {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={{ fontSize: 24, fontWeight: 'bold' }}>YangTu</Text>
-        <TouchableHighlight style={styles.loginButton}>
+        <TouchableHighlight style={styles.loginButton} onPress={() => navigation.navigate("LoginScreen")}>
           <Text style={{ fontSize: 16, fontWeight: '600' }}>Login</Text>
         </TouchableHighlight>
       </View>

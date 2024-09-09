@@ -1,13 +1,13 @@
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
-import LoginScreen from '../screens/LoginScreen';
-import TabScreen from './TabScreen';
-import { StyleSheet } from 'react-native';
-import LandingPage from '../screens/LandingPage';
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+import LoginScreen from "../screens/LoginScreen";
+import TabScreen from "./TabScreen";
+import { StyleSheet } from "react-native";
+import LandingPage from "../screens/LandingPage";
 
 const Stack = createNativeStackNavigator();
 
-export default function StackScreen(props) {
+export default function StackScreen() {
   return (
     <>
       <SafeAreaProvider>
@@ -38,6 +38,6 @@ export default function StackScreen(props) {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: '#FFF',
+    backgroundColor: "#FFF",
   },
 });
