@@ -7,7 +7,7 @@ export default function StackScreen(props) {
   return (
     <>
       <Stack.Navigator>
-        <Stack.Screen name="LoginSceen" component={LoginScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="LoginScreen" component={LoginScreen} options={{ headerShown: false }} />
         <Stack.Screen name="TabScreen" component={TabScreen} options={{ headerShown: false }} />
       </Stack.Navigator >
     </>
