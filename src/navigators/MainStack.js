@@ -1,24 +1,33 @@
 import { NavigationContainer } from "@react-navigation/native";
-import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import StackScreen from "./StackScreen";
-import { StyleSheet } from "react-native";
+import { useState, useContext, useEffect } from "react";
+import TabScreen from "./TabScreen";
+import { AuthContext } from "../contexts/auth";
+import * as SecureStore from "expo-secure-store";
 export default function MainStack(props) {
+  const { isSignedIn, setIsSignedIn } = useContext(AuthContext);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    setIsLoading(true);
+    SecureStore.getItemAsync("access_token")
+      .then((token) => {
+        if (token) {
+          setIsSignedIn(true);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }, []);
   return (
     <>
-      <SafeAreaProvider>
-        <SafeAreaView style={styles.safeArea}>
-          <NavigationContainer>
-            <StackScreen />
-          </NavigationContainer>
-        </SafeAreaView>
-      </SafeAreaProvider>
+      <NavigationContainer>
+        {isSignedIn ? <TabScreen /> : <StackScreen />}
+      </NavigationContainer>
     </>
   );
 }
-
-const styles = StyleSheet.create({
-  safeArea: {
-    flex: 1,
-    backgroundColor: "white",
-  },
-});
