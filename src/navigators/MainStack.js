@@ -1,24 +1,14 @@
 import { NavigationContainer } from '@react-navigation/native';
-import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import StackScreen from './StackScreen';
-import { StyleSheet } from 'react-native';
+import { useState } from 'react';
+import TabScreen from './TabScreen';
 export default function MainStack(props) {
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
   return (
     <>
-      <SafeAreaProvider>
-        <SafeAreaView style={styles.safeArea}>
-          <NavigationContainer>
-            <StackScreen />
-          </NavigationContainer>
-        </SafeAreaView>
-      </SafeAreaProvider>
+      <NavigationContainer>
+        {isLoggedIn ? <TabScreen /> : <StackScreen />}
+      </NavigationContainer>
     </>
   );
 }
-
-const styles = StyleSheet.create({
-  safeArea: {
-    flex: 1,
-    backgroundColor: '#FFF'
-  }
-})

@@ -24,14 +24,10 @@ export default function LandingPage() {
             style={{ flexDirection: 'row', gap: 16, justifyContent: 'center' }}
           >
             <TouchableHighlight style={styles.registerButton}>
-              <Text style={{ fontSize: 16, fontWeight: '600', color: '#FFF' }}>
-                Daftar Yasa
-              </Text>
+              <Text style={styles.registerText}>Daftar Yasa</Text>
             </TouchableHighlight>
             <TouchableHighlight style={styles.registerButton}>
-              <Text style={{ fontSize: 16, fontWeight: '600', color: '#FFF' }}>
-                Daftar Jalu
-              </Text>
+              <Text style={styles.registerText}>Daftar Jalu</Text>
             </TouchableHighlight>
           </View>
         </View>
@@ -62,6 +58,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#1E204C',
     padding: 12,
     borderRadius: 50,
+    width: 120,
+  },
+  registerText: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#FFF',
+    textAlign: 'center',
   },
   content: {
     flex: 15,
