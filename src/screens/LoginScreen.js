@@ -23,7 +23,6 @@ const styles = StyleSheet.create({
     textAlignVertical: "center",
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: 
   },
   input: {
     height: 40,
