@@ -4,6 +4,8 @@ import LoginScreen from "../screens/LoginScreen";
 import TabScreen from "./TabScreen";
 import { StyleSheet } from "react-native";
 import LandingPage from "../screens/LandingPage";
+import ClientRegisterScreen from "../screens/ClientRegisterScreen";
+import WorkerRegisterScreen from "../screens/WorkerRegisterScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -19,10 +21,12 @@ export default function StackScreen() {
               options={{ headerShown: false }}
             />
             <Stack.Screen
-              name="LoginScreen"
+              name="Login"
               component={LoginScreen}
               options={{ headerShown: false }}
             />
+            <Stack.Screen name="ClientRegister" component={ClientRegisterScreen} options={{ headerShown: false }} />
+            <Stack.Screen name="WorkerRegister" component={WorkerRegisterScreen} options={{ headerShown: false }} />
             <Stack.Screen
               name="TabScreen"
               component={TabScreen}
@@ -30,7 +34,7 @@ export default function StackScreen() {
             />
           </Stack.Navigator>
         </SafeAreaView>
-      </SafeAreaProvider>
+      </SafeAreaProvider >
     </>
   );
 }

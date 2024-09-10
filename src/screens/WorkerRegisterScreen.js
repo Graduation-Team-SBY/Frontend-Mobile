@@ -1,55 +1,58 @@
 import { StyleSheet, Text, TextInput, TouchableHighlight, View } from "react-native"
-import { useState, useContext } from "react"
-import { instanceAxios as axios, instanceAxios } from "../config/axiosInstance"
-import * as SecureStore from "expo-secure-store"
-import { AuthContext } from "../contexts/auth"
-export default function LoginScreen({ navigation }) {
+import { useState } from "react"
+import { instanceAxios as axios } from "../config/axiosInstance"
+
+export default function WorkerRegisterScreen({ navigation }) {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+  const [phoneNumber, setPhoneNumber] = useState("")
   const [isLoading, setIsLoading] = useState(false)
-  const { setIsSignedIn } = useContext(AuthContext)
-  const loginHandler = async () => {
+  const registerHandler = async () => {
     try {
       setIsLoading(true)
-      const { data } = await instanceAxios({
+      await axios({
         method: "POST",
-        url: "/login",
+        url: "/worker/register",
         data: {
           email,
+          phoneNumber,
           password
         }
       })
-      await Promise.all([SecureStore.setItemAsync("access_token", data.access_token), SecureStore.setItemAsync("role", data.role)])
-      setIsSignedIn(true)
-    } catch (error) {
-      console.log(error)
+      navigation.navigate("LoginScreen")
+    } catch (err) {
+      console.log(err)
     } finally {
       setIsLoading(false)
     }
   }
+
   return (
     <>
       <View style={styles.container}>
-        <Text style={styles.title}>Login</Text>
-        <Text style={styles.subtitle}>Welcome back!</Text>
+        <Text style={styles.title}>Worker Register</Text>
+        <Text style={styles.subtitle}>Create account in this app</Text>
         <View>
           <Text style={styles.label}>Email</Text>
           <TextInput style={styles.input} onChangeText={setEmail} value={email} placeholder={"Type here your email"} placeholderTextColor={"#9ca3af"} />
         </View>
         <View>
+          <Text style={styles.label}>Phone Number</Text>
+          <TextInput style={styles.input} onChangeText={setPhoneNumber} value={phoneNumber} placeholder={"Type here your number"} placeholderTextColor={"#9ca3af"} />
+        </View>
+        <View>
           <Text style={styles.label}>Password</Text>
           <TextInput style={styles.input} onChangeText={setPassword} value={password} placeholder={"Type here your password"} placeholderTextColor={"#9ca3af"} secureTextEntry={true} />
         </View>
-        <TouchableHighlight style={styles.button} onPress={loginHandler}>
-          <Text style={styles.buttonText}>Login</Text>
+        <TouchableHighlight style={styles.button} onPress={registerHandler}>
+          <Text style={styles.buttonText}>Register</Text>
         </TouchableHighlight>
-        <TouchableHighlight style={styles.buttonAlt} onPress={() => { navigation.navigate("ClientRegister") }} underlayColor={"#9ca3af"} activeOpacity={0.5}>
-          <Text style={styles.buttonTextAlt}>Create new account instead</Text>
+        <TouchableHighlight style={styles.buttonAlt} onPress={() => { navigation.navigate("RegisterScreen") }} underlayColor={"#9ca3af"} activeOpacity={0.5}>
+          <Text style={styles.buttonTextAlt}>Sign in</Text>
         </TouchableHighlight>
       </View>
     </>
   )
-
 };
 
 const styles = StyleSheet.create({
