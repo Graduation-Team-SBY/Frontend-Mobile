@@ -1,7 +1,7 @@
 import { StyleSheet, Text, TextInput, View, TouchableHighlight, KeyboardAvoidingView } from "react-native";
 import { instanceAxios as axios } from "../config/axiosInstance";
 import { useState } from "react"
-export default function CreateJobScreen({ navigation }) {
+export default function CreateBebersihScreen({ navigation }) {
   const [fee, setFee] = useState(0)
   const [description, setDescription] = useState("")
   const [address, setAddress] = useState("")
@@ -12,7 +12,7 @@ export default function CreateJobScreen({ navigation }) {
     try {
       await axios({
         method: "POST",
-        url: "/clients/jobs/belanja",
+        url: "/clients/jobs/bebersih",
         data: {
           fee,
           description,
