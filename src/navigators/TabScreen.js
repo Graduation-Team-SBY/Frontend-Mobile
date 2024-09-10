@@ -12,7 +12,7 @@ export default function TabScreen(props) {
     <>
       <Tab.Navigator>
       <Tab.Screen
-          name="Home"
+          name="HomeClient"
           component={HomeClient}
           options={{
             tabBarIcon: ({ color, size, focused }) =>
