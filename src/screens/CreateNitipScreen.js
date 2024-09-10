@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
   scrollViewContent: {
     flexGrow: 1,
     justifyContent: "center",
-    padding: 20,
+    padding: 28,
   },
   title: {
     fontSize: 24,

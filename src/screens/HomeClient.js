@@ -110,9 +110,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#FAF9FE',
-    padding: 20,
+    padding: 28,
     gap: 32,
-    marginVertical: 12,
+    marginVertical: 4,
   },
   containerCard: {
     flexDirection: 'row',
