@@ -40,7 +40,7 @@ export default function RegStackScreen() {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: "#FFF",
+    backgroundColor: '#FAF9FE',
   },
 });
 

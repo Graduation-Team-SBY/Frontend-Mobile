@@ -57,7 +57,7 @@ export default function ClientRegisterScreen({ navigation }) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#ffffff",
+    backgroundColor: '#FAF9FE',
     minHeight: "100%",
     alignItems: "center",
     justifyContent: "center",
