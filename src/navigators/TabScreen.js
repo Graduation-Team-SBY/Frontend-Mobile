@@ -4,6 +4,7 @@ import HomeClient from "../screens/HomeClient";
 import ProfileScreen from "../screens/ProfileScreen";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import HistoryOrdersClientScreen from "../screens/HistoryOrdersClientScreen";
+import { AuthStackScreen } from "./StackScreen";
 
 const Tab = createBottomTabNavigator();
 

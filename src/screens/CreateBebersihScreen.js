@@ -2,6 +2,7 @@ import { StyleSheet, Text, TextInput, View, TouchableHighlight } from "react-nat
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { instanceAxios as axios } from "../config/axiosInstance";
 import { useState } from "react"
+import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 export default function CreateBebersihScreen({ navigation }) {
   const [fee, setFee] = useState(0)
   const [description, setDescription] = useState("")
@@ -30,71 +31,82 @@ export default function CreateBebersihScreen({ navigation }) {
   }
   return (
     <>
-      <KeyboardAwareScrollView
-        style={styles.container}
-        contentContainerStyle={styles.scrollViewContent}
-        showsVerticalScrollIndicator={false}
-      >
-        <Text style={styles.title}>Let's start with your first job post.</Text>
-        <View style={styles.formContainer}>
-          <View style={styles.inputContainer}>
-            <Text style={styles.label}>Fee</Text>
-            <TextInput
-              style={styles.input}
-              onChangeText={setFee}
-              value={fee}
-              placeholder={"Enter the fee"}
-              placeholderTextColor={"#9ca3af"}
-              keyboardType="numeric"
-            />
-          </View>
-          <View style={styles.inputContainer}>
-            <Text style={styles.label}>Description</Text>
-            <TextInput
-              style={styles.input}
-              onChangeText={setDescription}
-              value={description}
-              placeholder={"Type here your job description"}
-              placeholderTextColor={"#9ca3af"}
-              multiline
-            />
-          </View>
-          <View style={styles.inputContainer}>
-            <Text style={styles.label}>Address</Text>
-            <TextInput
-              style={styles.input}
-              onChangeText={setAddress}
-              value={address}
-              placeholder={"Type here your address"}
-              placeholderTextColor={"#9ca3af"}
-            />
-          </View>
-          <View style={styles.inputContainer}>
-            <Text style={styles.label}>Address Notes</Text>
-            <TextInput
-              style={styles.input}
-              onChangeText={setAddressNotes}
-              value={addressNotes}
-              placeholder={"Type here your address notes"}
-              placeholderTextColor={"#9ca3af"}
-            />
-          </View>
-          <TouchableHighlight
-            style={styles.button}
-            onPress={createJob}
-            disabled={isLoading}
+      <SafeAreaProvider>
+        <SafeAreaView style={styles.safeArea}>
+
+
+          <KeyboardAwareScrollView
+            style={styles.container}
+            contentContainerStyle={styles.scrollViewContent}
+            showsVerticalScrollIndicator={false}
           >
-            <Text style={styles.buttonText}>
-              {isLoading ? "Creating..." : "Buat Orderan"}
-            </Text>
-          </TouchableHighlight>
-        </View>
-      </KeyboardAwareScrollView>
+            <Text style={styles.title}>Let's start with your first job post.</Text>
+            <View style={styles.formContainer}>
+              <View style={styles.inputContainer}>
+                <Text style={styles.label}>Fee</Text>
+                <TextInput
+                  style={styles.input}
+                  onChangeText={setFee}
+                  value={fee}
+                  placeholder={"Enter the fee"}
+                  placeholderTextColor={"#9ca3af"}
+                  keyboardType="numeric"
+                />
+              </View>
+              <View style={styles.inputContainer}>
+                <Text style={styles.label}>Description</Text>
+                <TextInput
+                  style={styles.input}
+                  onChangeText={setDescription}
+                  value={description}
+                  placeholder={"Type here your job description"}
+                  placeholderTextColor={"#9ca3af"}
+                  multiline
+                />
+              </View>
+              <View style={styles.inputContainer}>
+                <Text style={styles.label}>Address</Text>
+                <TextInput
+                  style={styles.input}
+                  onChangeText={setAddress}
+                  value={address}
+                  placeholder={"Type here your address"}
+                  placeholderTextColor={"#9ca3af"}
+                />
+              </View>
+              <View style={styles.inputContainer}>
+                <Text style={styles.label}>Address Notes</Text>
+                <TextInput
+                  style={styles.input}
+                  onChangeText={setAddressNotes}
+                  value={addressNotes}
+                  placeholder={"Type here your address notes"}
+                  placeholderTextColor={"#9ca3af"}
+                />
+              </View>
+              <TouchableHighlight
+                style={styles.button}
+                onPress={createJob}
+                disabled={isLoading}
+              >
+                <Text style={styles.buttonText}>
+                  {isLoading ? "Creating..." : "Buat Orderan"}
+                </Text>
+              </TouchableHighlight>
+            </View>
+          </KeyboardAwareScrollView>
+        </SafeAreaView>
+      </SafeAreaProvider>
     </>
+
   )
 };
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: "#FFF",
+  },
   container: {
     flex: 1,
     backgroundColor: "#ffffff",
