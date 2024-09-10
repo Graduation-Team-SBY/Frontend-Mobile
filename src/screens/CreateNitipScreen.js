@@ -1,5 +1,6 @@
-import { StyleSheet, Text, TextInput, View, TouchableHighlight, KeyboardAvoidingView, Platform, ScrollView } from "react-native";
+import { StyleSheet, Text, TextInput, View, TouchableHighlight } from "react-native";
 import { instanceAxios as axios } from "../config/axiosInstance";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { useState } from "react"
 export default function CreateNitipScreen({ navigation }) {
   const [fee, setFee] = useState(0)
@@ -29,31 +30,66 @@ export default function CreateNitipScreen({ navigation }) {
   }
   return (
     <>
-      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.container}>
-        <ScrollView contentContainerStyles={styles.scrollView}>
-
-          <Text style={styles.title}>Let's start with your first job post.</Text>
-          <View>
+      <KeyboardAwareScrollView
+        style={styles.container}
+        contentContainerStyle={styles.scrollViewContent}
+        showsVerticalScrollIndicator={false}
+      >
+        <Text style={styles.title}>Let's start with your first job post.</Text>
+        <View style={styles.formContainer}>
+          <View style={styles.inputContainer}>
             <Text style={styles.label}>Fee</Text>
-            <TextInput style={styles.input} onChangeText={setFee} value={fee} placeholder={"Type here your email"} placeholderTextColor={"#9ca3af"} />
+            <TextInput
+              style={styles.input}
+              onChangeText={setFee}
+              value={fee}
+              placeholder={"Enter the fee"}
+              placeholderTextColor={"#9ca3af"}
+              keyboardType="numeric"
+            />
           </View>
-          <View>
+          <View style={styles.inputContainer}>
             <Text style={styles.label}>Description</Text>
-            <TextInput style={styles.input} onChangeText={setDescription} value={description} placeholder={"Type here your job description"} placeholderTextColor={"#9ca3af"} />
+            <TextInput
+              style={styles.input}
+              onChangeText={setDescription}
+              value={description}
+              placeholder={"Type here your job description"}
+              placeholderTextColor={"#9ca3af"}
+              multiline
+            />
           </View>
-          <View>
+          <View style={styles.inputContainer}>
             <Text style={styles.label}>Address</Text>
-            <TextInput style={styles.input} onChangeText={setAddress} value={address} placeholder={"Type here your address"} placeholderTextColor={"#9ca3af"} />
+            <TextInput
+              style={styles.input}
+              onChangeText={setAddress}
+              value={address}
+              placeholder={"Type here your address"}
+              placeholderTextColor={"#9ca3af"}
+            />
           </View>
-          <View>
+          <View style={styles.inputContainer}>
             <Text style={styles.label}>Address Notes</Text>
-            <TextInput style={styles.input} onChangeText={setAddressNotes} value={addressNotes} placeholder={"Type here your address notes"} placeholderTextColor={"#9ca3af"} />
+            <TextInput
+              style={styles.input}
+              onChangeText={setAddressNotes}
+              value={addressNotes}
+              placeholder={"Type here your address notes"}
+              placeholderTextColor={"#9ca3af"}
+            />
           </View>
-          <TouchableHighlight style={styles.button} onPress={createJob}>
-            <Text style={styles.buttonText}>Buat Orderan</Text>
+          <TouchableHighlight
+            style={styles.button}
+            onPress={createJob}
+            disabled={isLoading}
+          >
+            <Text style={styles.buttonText}>
+              {isLoading ? "Creating..." : "Buat Orderan"}
+            </Text>
           </TouchableHighlight>
-        </ScrollView >
-      </KeyboardAvoidingView >
+        </View>
+      </KeyboardAwareScrollView>
     </>
   )
 };
@@ -62,59 +98,52 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#ffffff",
-    alignItems: "center",
-    justifyContent: "center",
-    fontWeight: 600
   },
-  scrollView: {
-    flex: 1,
-    alignItems: "center",
+  scrollViewContent: {
+    flexGrow: 1,
     justifyContent: "center",
+    padding: 20,
   },
   title: {
-    fontSize: 30,
+    fontSize: 24,
     fontWeight: "bold",
     color: "#1D204C",
-    paddingBottom: 15,
-    paddingHorizontal: 20
-
+    textAlign: "center",
+    marginBottom: 20,
   },
-  subtitle: {
-    fontSize: 15,
-    fontWeight: "bold",
-    color: "#9ca3af",
+  formContainer: {
+    alignItems: "center",
+  },
+  inputContainer: {
+    width: "100%",
+    marginBottom: 15,
   },
   label: {
-    marginHorizontal: 12,
-    marginBottom: 12,
+    marginBottom: 5,
     color: "#1D204C",
-    fontWeight: "600"
+    fontWeight: "600",
   },
   input: {
     height: 50,
-    width: 300,
-    marginHorizontal: 12,
-    marginBottom: 12,
-    paddingVertical: 10,
-    paddingHorizontal: 20,
+    width: "100%",
+    paddingHorizontal: 15,
     borderWidth: 1,
     borderRadius: 25,
     borderColor: "#9ca3af",
-    backgroundColor: "#ffffff"
-  }, button: {
+    backgroundColor: "#ffffff",
+  },
+  button: {
     backgroundColor: "#1D204C",
     height: 50,
-    width: 300,
-    marginHorizontal: 12,
+    width: "100%",
     marginTop: 20,
-    borderWidth: 1,
     borderRadius: 25,
     alignItems: "center",
     justifyContent: "center",
   },
   buttonText: {
     color: "#ffffff",
-    fontSize: 15,
+    fontSize: 16,
     fontWeight: "600",
   },
 })
