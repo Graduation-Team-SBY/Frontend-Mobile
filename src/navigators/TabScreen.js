@@ -1,6 +1,7 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import LogoutScreen from '../screens/LogoutScreen';
 import HomeClient from '../screens/HomeClient';
+import CreateJobScreen from '../screens/CreateJobScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
@@ -10,7 +11,7 @@ export default function TabScreen(props) {
   return (
     <>
       <Tab.Navigator>
-        <Tab.Screen
+      <Tab.Screen
           name="Home"
           component={HomeClient}
           options={{
@@ -36,6 +37,7 @@ export default function TabScreen(props) {
             tabBarShowLabel: false,
           }}
         />
+        <Tab.Screen name="CreateJob" component={CreateJobScreen} />
         <Tab.Screen name="Logout" component={LogoutScreen} />
       </Tab.Navigator>
     </>

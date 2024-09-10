@@ -42,7 +42,7 @@ export default function LoginScreen({ navigation }) {
         <Text style={styles.title}>Login</Text>
         <Text style={styles.subtitle}>Welcome back!</Text>
         <View>
-          <Text style={styles.label}> Email</Text>
+          <Text style={styles.label}>Email</Text>
           <TextInput
             style={styles.input}
             onChangeText={setEmail}
@@ -54,7 +54,7 @@ export default function LoginScreen({ navigation }) {
           />
         </View>
         <View>
-          <Text style={styles.label}> Password</Text>
+          <Text style={styles.label}>Password</Text>
           <TextInput
             style={styles.input}
             onChangeText={setPassword}
@@ -68,6 +68,16 @@ export default function LoginScreen({ navigation }) {
         </View>
         <TouchableHighlight style={styles.button} onPress={loginHandler}>
           <Text style={styles.buttonText}>Login</Text>
+        </TouchableHighlight>
+        <TouchableHighlight
+          style={styles.buttonAlt}
+          onPress={() => {
+            navigation.navigate('ClientRegister');
+          }}
+          underlayColor={'#9ca3af'}
+          activeOpacity={0.5}
+        >
+          <Text style={styles.buttonTextAlt}>Create new account instead</Text>
         </TouchableHighlight>
       </View>
     </>
@@ -125,6 +135,23 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: '#ffffff',
+    fontSize: 15,
+    fontWeight: '600',
+  },
+  buttonAlt: {
+    backgroundColor: '#FFFFFF',
+    height: 50,
+    width: 300,
+    marginHorizontal: 12,
+    marginTop: 20,
+    borderWidth: 1,
+    borderRadius: 25,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderColor: '#1D204C',
+  },
+  buttonTextAlt: {
+    color: '#1D204C',
     fontSize: 15,
     fontWeight: '600',
   },
