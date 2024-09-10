@@ -6,7 +6,7 @@ import {
   View,
 } from 'react-native';
 import { useState, useContext } from 'react';
-import { instanceAxios as axios, instanceAxios } from '../config/axiosInstance';
+import { instanceAxios as axios } from '../config/axiosInstance';
 import * as SecureStore from 'expo-secure-store';
 import { AuthContext } from '../contexts/auth';
 export default function LoginScreen({ navigation }) {
@@ -17,7 +17,7 @@ export default function LoginScreen({ navigation }) {
   const loginHandler = async () => {
     try {
       setIsLoading(true);
-      const { data } = await instanceAxios({
+      const { data } = await axios({
         method: 'POST',
         url: '/login',
         data: {
@@ -50,7 +50,7 @@ export default function LoginScreen({ navigation }) {
             placeholder={'Type here your email'}
             placeholderTextColor={'#9ca3af'}
             autoCapitalize={false}
-            autoComplete={false}
+            autoComplete="off"
           />
         </View>
         <View>
@@ -63,7 +63,7 @@ export default function LoginScreen({ navigation }) {
             placeholderTextColor={'#9ca3af'}
             secureTextEntry={true}
             autoCapitalize={false}
-            autoComplete={false}
+            autoComplete="off"
           />
         </View>
         <TouchableHighlight style={styles.button} onPress={loginHandler}>

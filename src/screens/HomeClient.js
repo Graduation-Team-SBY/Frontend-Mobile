@@ -1,13 +1,13 @@
 import { LinearGradient } from 'expo-linear-gradient';
 import React from 'react';
-import { StyleSheet, Text, View, Image, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity } from 'react-native';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import { SignalIcon } from 'react-native-heroicons/solid';
 import { CurrencyDollarIcon } from 'react-native-heroicons/solid';
 import Swiper from 'react-native-swiper';
 
-export default function HomeClient() {
+export default function HomeClient({ navigation }) {
   return (
     <ScrollView style={{ backgroundColor: '#FAF9FE' }}>
       <View style={styles.container}>
@@ -51,20 +51,20 @@ export default function HomeClient() {
           Mau ngapain hari ini?
         </Text>
         <View style={styles.containerCard}>
-          <View style={styles.card}>
+          <TouchableOpacity style={styles.card} onPress={() => navigation.navigate("CreateNitip")}>
             <Image
               source={require('../assets/shopping-bag.png')}
               style={{ width: 50, height: 50 }}
             />
             <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Nitip</Text>
-          </View>
-          <View style={styles.card}>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.card} onPress={() => navigation.navigate("CreateBebersih")}>
             <Image
               source={require('../assets/bucket.png')}
               style={{ width: 50, height: 50 }}
             />
             <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Bebersih</Text>
-          </View>
+          </TouchableOpacity>
         </View>
         <View style={styles.containerSwiper}>
           <Swiper
