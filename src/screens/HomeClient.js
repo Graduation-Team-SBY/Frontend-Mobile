@@ -44,7 +44,7 @@ export default function HomeClient() {
         </View>
         <View>
           <Text style={styles.title}>
-            Halo, <Text style={styles.span}>Adit!</Text>
+            Halo, <Text style={styles.span}>Adit</Text> !
           </Text>
         </View>
         <Text style={{ fontSize: 24, fontWeight: 'bold' }}>
