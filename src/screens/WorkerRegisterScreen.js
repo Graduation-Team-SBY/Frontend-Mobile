@@ -12,18 +12,18 @@ export default function WorkerRegisterScreen({ navigation }) {
       setIsLoading(true)
       await axios({
         method: "POST",
-        url: "/worker/register",
+        url: "/workers/register",
         data: {
           email,
           phoneNumber,
           password
         }
       })
-      navigation.navigate("LoginScreen")
     } catch (err) {
       console.log(err)
     } finally {
       setIsLoading(false)
+      navigation.navigate("Login")
     }
   }
 
@@ -47,7 +47,7 @@ export default function WorkerRegisterScreen({ navigation }) {
         <TouchableHighlight style={styles.button} onPress={registerHandler}>
           <Text style={styles.buttonText}>Register</Text>
         </TouchableHighlight>
-        <TouchableHighlight style={styles.buttonAlt} onPress={() => { navigation.navigate("RegisterScreen") }} underlayColor={"#9ca3af"} activeOpacity={0.5}>
+        <TouchableHighlight style={styles.buttonAlt} onPress={() => { navigation.navigate("Login") }} underlayColor={"#9ca3af"} activeOpacity={0.5}>
           <Text style={styles.buttonTextAlt}>Sign in</Text>
         </TouchableHighlight>
       </View>

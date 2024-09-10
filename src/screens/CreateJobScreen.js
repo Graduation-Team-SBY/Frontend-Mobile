@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TextInput, View, TouchableHighlight } from "react-native";
+import { StyleSheet, Text, TextInput, View, TouchableHighlight, KeyboardAvoidingView } from "react-native";
 import { instanceAxios as axios } from "../config/axiosInstance";
 import { useState } from "react"
 export default function CreateJobScreen({ navigation }) {
@@ -21,7 +21,7 @@ export default function CreateJobScreen({ navigation }) {
         }
       })
     } catch (error) {
-
+      console.log(err)
     } finally {
       setIsLoading(true)
       navigation.navigate("HomeClient")
@@ -38,15 +38,15 @@ export default function CreateJobScreen({ navigation }) {
         </View>
         <View>
           <Text style={styles.label}>Description</Text>
-          <TextInput style={styles.input} onChangeText={setDescription} value={description} placeholder={"Type here your email"} placeholderTextColor={"#9ca3af"} />
+          <TextInput style={styles.input} onChangeText={setDescription} value={description} placeholder={"Type here your job description"} placeholderTextColor={"#9ca3af"} />
         </View>
         <View>
           <Text style={styles.label}>Address</Text>
-          <TextInput style={styles.input} onChangeText={setAddress} value={address} placeholder={"Type here your email"} placeholderTextColor={"#9ca3af"} />
+          <TextInput style={styles.input} onChangeText={setAddress} value={address} placeholder={"Type here your address"} placeholderTextColor={"#9ca3af"} />
         </View>
         <View>
           <Text style={styles.label}>Address Notes</Text>
-          <TextInput style={styles.input} onChangeText={setAddressNotes} value={addressNotes} placeholder={"Type here your email"} placeholderTextColor={"#9ca3af"} />
+          <TextInput style={styles.input} onChangeText={setAddressNotes} value={addressNotes} placeholder={"Type here your address notes"} placeholderTextColor={"#9ca3af"} />
         </View>
         <TouchableHighlight style={styles.button} onPress={createJob}>
           <Text style={styles.buttonText}>Buat Orderan</Text>
@@ -58,8 +58,8 @@ export default function CreateJobScreen({ navigation }) {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     backgroundColor: "#ffffff",
-    minHeight: "100%",
     alignItems: "center",
     justifyContent: "center",
     fontWeight: 600
