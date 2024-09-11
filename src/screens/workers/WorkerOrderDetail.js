@@ -12,24 +12,18 @@ export default function WorkerOrderDetail({ navigation, route }) {
   const fetchPost = async () => {
     try {
       setIsLoading(true)
-      // const { data } = await axios({
-      //   url: `/jobs/${route.params.jobId}`,
-      //   method: "GET",
-      //   headers: {
-      //     Authorization: `Bearer ${await SecureStore.getItemAsync("access_token")}`
-      //   }
-      // })
+      const access_token = await SecureStore.getItemAsync("access_token")
       const [jobRes, profileRes] = await Promise.all([await axios({
         url: `/jobs/${route.params.jobId}`,
         method: "GET",
         headers: {
-          Authorization: `Bearer ${await SecureStore.getItemAsync("access_token")}`
+          Authorization: `Bearer ${access_token}`
         }
       }), axios({
         method: 'GET',
         url: 'workers/profile',
         headers: {
-          Authorization: `Bearer ${await SecureStore.getItemAsync("access_token")}`,
+          Authorization: `Bearer ${access_token}`,
         },
       })])
       setJob(jobRes.data)
@@ -39,7 +33,24 @@ export default function WorkerOrderDetail({ navigation, route }) {
     } finally {
       setIsLoading(false)
     }
+  }
 
+  const applyJob = async () => {
+    try {
+      setIsLoading(true)
+      await axios({
+        url: `/workers/jobs/${route.params.jobId}`,
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${await SecureStore.getItemAsync("access_token")}`
+        }
+      })
+      navigation.navigate("TabScreen")
+    } catch (err) {
+      console.log(err)
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   useEffect(() => {
@@ -104,13 +115,16 @@ export default function WorkerOrderDetail({ navigation, route }) {
             <TouchableOpacity style={styles.secondaryButton} onPress={() => { }}>
               <Text style={styles.secondaryText}>Pesan</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.primaryButton} onPress={() => { navigation.pop() }}>
+            <TouchableOpacity style={styles.primaryButton} onPress={() => { navigation.navigate("WorkerVerificationOrder", { job }) }}>
               <Text style={styles.primaryText}>Selesai</Text>
             </TouchableOpacity>
-          </>) : <>
-            <TouchableOpacity style={styles.primaryButton} onPress={() => { navigation.pop() }}>
+          </>) : job.workers.some(val => val.userId === profile.userId) ? <View style={styles.primaryButton} >
+            <Text style={styles.primaryText}>Kamu sudah melamar pekerjaan ini</Text>
+          </View> : <>
+            <TouchableOpacity style={styles.primaryButton} onPress={applyJob}>
               <Text style={styles.primaryText}>Melamar</Text>
-            </TouchableOpacity></>}
+            </TouchableOpacity>
+          </>}
 
         </View>
       </SafeAreaView>

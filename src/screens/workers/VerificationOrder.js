@@ -11,8 +11,9 @@ import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import { formatCurrencyRupiah } from '../../helpers/currency';
 import { launchCameraAsync, useCameraPermissions } from 'expo-image-picker';
 import { useState } from 'react';
+import { instanceAxios as axios } from '../../config/axiosInstance';
 
-export default function VerificationOrder() {
+export default function VerificationOrder({ route, navigation }) {
   const [permission, requestPermission] = useCameraPermissions();
   const [imgResult, setImgResult] = useState([]);
 
@@ -52,6 +53,14 @@ export default function VerificationOrder() {
     let type = match ? `image/${match[1]}` : `image`;
 
     setImgResult(imgResult.concat({ uri: localUri, name: filename, type }));
+  }
+
+  const verifyOrder = async () => {
+    try {
+
+    } catch (err) {
+
+    }
   }
 
   return (
@@ -101,14 +110,14 @@ export default function VerificationOrder() {
           </View>
           <View style={styles.totalFee}>
             <Text style={{ fontWeight: '700' }}>Jumlah Total</Text>
-            <Text>{formatCurrencyRupiah(20000)}</Text>
+            <Text>{formatCurrencyRupiah(route.params.job.fee)}</Text>
           </View>
           <View style={styles.description}>
             <Text style={{ fontWeight: '700' }}>Deskripsi:</Text>
-            <Text>Halooo</Text>
+            <Text>{route.params.job.description}</Text>
           </View>
         </View>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={ }>
           <Text style={styles.buttonText}>Kirim Verifikasi</Text>
         </TouchableOpacity>
       </View>
