@@ -1,6 +1,6 @@
 import { LinearGradient } from 'expo-linear-gradient';
 import { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, ScrollView, Pressable } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, Pressable, TouchableOpacity, TouchableHighlight } from 'react-native';
 import { CurrencyDollarIcon } from 'react-native-heroicons/solid';
 import { instanceAxios as axios } from '../../config/axiosInstance';
 import * as SecureStore from 'expo-secure-store';
@@ -106,7 +106,7 @@ export default function HomeWorker({ navigation }) {
           </Pressable>
         </View>
         {newestJob.map((val, i) => {
-          return <NewestJobCard key={i} job={val} />;
+          return <NewestJobCard key={i} job={val} navigation={navigation} />
         })}
       </View>
     </ScrollView>
