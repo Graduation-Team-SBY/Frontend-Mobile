@@ -7,19 +7,33 @@ import { formatCurrencyRupiah } from "../../helpers/currency";
 import Swiper from "react-native-swiper";
 export default function WorkerOrderDetail({ navigation, route }) {
   const [job, setJob] = useState({})
+  const [profile, setProfile] = useState({})
   const [isLoading, setIsLoading] = useState(false)
   const fetchPost = async () => {
     try {
       setIsLoading(true)
-      const { data } = await axios({
+      // const { data } = await axios({
+      //   url: `/jobs/${route.params.jobId}`,
+      //   method: "GET",
+      //   headers: {
+      //     Authorization: `Bearer ${await SecureStore.getItemAsync("access_token")}`
+      //   }
+      // })
+      const [jobRes, profileRes] = await Promise.all([await axios({
         url: `/jobs/${route.params.jobId}`,
         method: "GET",
         headers: {
           Authorization: `Bearer ${await SecureStore.getItemAsync("access_token")}`
         }
-      })
-      // console.log(data)
-      setJob(data)
+      }), axios({
+        method: 'GET',
+        url: 'workers/profile',
+        headers: {
+          Authorization: `Bearer ${await SecureStore.getItemAsync("access_token")}`,
+        },
+      })])
+      setJob(jobRes.data)
+      setProfile(profileRes.data)
     } catch (err) {
       console.log(err)
     } finally {
@@ -86,12 +100,18 @@ export default function WorkerOrderDetail({ navigation, route }) {
           </View>
         </ScrollView>
         <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.secondaryButton} onPress={() => { }}>
-            <Text style={styles.secondaryText}>Pesan</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.primaryButton} onPress={() => { navigation.pop() }}>
-            <Text style={styles.primaryText}>Selesai</Text>
-          </TouchableOpacity>
+          {job.workerId === profile.userId ? (<>
+            <TouchableOpacity style={styles.secondaryButton} onPress={() => { }}>
+              <Text style={styles.secondaryText}>Pesan</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.primaryButton} onPress={() => { navigation.pop() }}>
+              <Text style={styles.primaryText}>Selesai</Text>
+            </TouchableOpacity>
+          </>) : <>
+            <TouchableOpacity style={styles.primaryButton} onPress={() => { navigation.pop() }}>
+              <Text style={styles.primaryText}>Melamar</Text>
+            </TouchableOpacity></>}
+
         </View>
       </SafeAreaView>
     </SafeAreaProvider >
