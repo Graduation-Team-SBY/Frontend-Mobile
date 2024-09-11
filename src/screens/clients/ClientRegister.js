@@ -1,8 +1,8 @@
 import { StyleSheet, Text, TextInput, TouchableHighlight, View } from "react-native"
 import { useState } from "react"
-import { instanceAxios as axios } from "../config/axiosInstance"
+import { instanceAxios as axios } from "../../config/axiosInstance"
 
-export default function WorkerRegisterScreen({ navigation }) {
+export default function ClientRegister({ navigation }) {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [phoneNumber, setPhoneNumber] = useState("")
@@ -12,7 +12,7 @@ export default function WorkerRegisterScreen({ navigation }) {
       setIsLoading(true)
       await axios({
         method: "POST",
-        url: "/workers/register",
+        url: "/clients/register",
         data: {
           email,
           phoneNumber,
@@ -30,7 +30,7 @@ export default function WorkerRegisterScreen({ navigation }) {
   return (
     <>
       <View style={styles.container}>
-        <Text style={styles.title}>Worker Register</Text>
+        <Text style={styles.title}>Client Register</Text>
         <Text style={styles.subtitle}>Create account in this app</Text>
         <View>
           <Text style={styles.label}>Email</Text>
@@ -57,7 +57,7 @@ export default function WorkerRegisterScreen({ navigation }) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#ffffff",
+    backgroundColor: '#FAF9FE',
     minHeight: "100%",
     alignItems: "center",
     justifyContent: "center",

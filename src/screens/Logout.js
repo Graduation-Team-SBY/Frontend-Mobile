@@ -2,7 +2,7 @@ import * as SecureStore from "expo-secure-store"
 import { AuthContext } from '../contexts/auth';
 import { useContext } from "react"
 import { View, Button } from "react-native";
-export default function LogoutScreen() {
+export default function Logout() {
   const { setIsSignedIn } = useContext(AuthContext)
   const logoutHandler = async () => {
     try {

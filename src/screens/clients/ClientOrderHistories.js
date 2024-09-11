@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react"
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { MultipleSelectList } from "react-native-dropdown-select-list";
-import OrderHistoryCard from "../components/OrderHistoryCard";
-export default function HistoryOrdersClientScreen() {
+import OrderHistoryCard from "../../components/OrderHistoryCard";
+export default function ClientOrderHistories() {
   const [selected, setSelected] = useState("");
 
   const data = [

@@ -9,7 +9,7 @@ import { useState, useContext } from 'react';
 import { instanceAxios as axios } from '../config/axiosInstance';
 import * as SecureStore from 'expo-secure-store';
 import { AuthContext } from '../contexts/auth';
-export default function LoginScreen({ navigation }) {
+export default function Login({ navigation }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -72,7 +72,7 @@ export default function LoginScreen({ navigation }) {
         <TouchableHighlight
           style={styles.buttonAlt}
           onPress={() => {
-            navigation.navigate('ClientRegister');
+            navigation.navigate('WorkerRegister');
           }}
           underlayColor={'#9ca3af'}
           activeOpacity={0.5}

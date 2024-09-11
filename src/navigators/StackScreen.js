@@ -1,13 +1,13 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { StyleSheet } from "react-native";
-import LoginScreen from "../screens/LoginScreen";
+import Login from "../screens/Login";
 import TabScreen from "./TabScreen";
 import LandingPage from "../screens/LandingPage";
-import ClientRegisterScreen from "../screens/ClientRegisterScreen";
-import WorkerRegisterScreen from "../screens/WorkerRegisterScreen";
-import CreateBebersihScreen from "../screens/CreateBebersihScreen";
-import CreateNitipScreen from "../screens/CreateNitipScreen";
+import ClientRegister from "../screens/clients/ClientRegister";
+import WorkerRegister from "../screens/workers/WorkerRegister";
+import CreateBebersih from "../screens/clients/CreateBebersih";
+import CreateNitip from "../screens/clients/CreateNitip";
 const Stack = createNativeStackNavigator();
 
 
@@ -26,11 +26,11 @@ export default function RegStackScreen() {
             />
             <Stack.Screen
               name="Login"
-              component={LoginScreen}
+              component={Login}
               options={{ headerShown: false }}
             />
-            <Stack.Screen name="ClientRegister" component={ClientRegisterScreen} options={{ headerShown: false }} />
-            <Stack.Screen name="WorkerRegister" component={WorkerRegisterScreen} options={{ headerShown: false }} />
+            <Stack.Screen name="ClientRegister" component={ClientRegister} options={{ headerShown: false }} />
+            <Stack.Screen name="WorkerRegister" component={WorkerRegister} options={{ headerShown: false }} />
           </Stack.Navigator>
         </SafeAreaView>
       </SafeAreaProvider >
@@ -54,8 +54,8 @@ export function AuthStackScreen() {
           component={TabScreen}
           options={{ headerShown: false }}
         />
-        <Stack.Screen name="CreateBebersih" component={CreateBebersihScreen} options={{ title: "" }} />
-        <Stack.Screen name="CreateNitip" component={CreateNitipScreen} options={{ title: "" }} />
+        <Stack.Screen name="CreateBebersih" component={CreateBebersih} options={{ title: "" }} />
+        <Stack.Screen name="CreateNitip" component={CreateNitip} options={{ title: "" }} />
       </Stack.Navigator>
     </>
   )

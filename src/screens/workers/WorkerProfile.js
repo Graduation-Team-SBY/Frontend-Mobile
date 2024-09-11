@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 
-export default function ProfileScreen() {
+export default function WorkerProfile() {
   return (
     <View style={styles.container}>
       {/* <Text style={{ fontSize: 36, fontWeight: 'bold' }}>My Profile</Text> */}

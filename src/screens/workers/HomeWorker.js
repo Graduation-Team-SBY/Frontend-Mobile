@@ -6,10 +6,10 @@ import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import { SignalIcon } from 'react-native-heroicons/solid';
 import { CurrencyDollarIcon } from 'react-native-heroicons/solid';
 import Swiper from 'react-native-swiper';
-import { instanceAxios as axios } from '../config/axiosInstance';
+import { instanceAxios as axios } from '../../config/axiosInstance';
 import * as SecureStore from "expo-secure-store";
-import { formatCurrencyRupiah } from '../helpers/currency';
-export default function HomeClient({ navigation }) {
+import { formatCurrencyRupiah } from '../../helpers/currency';
+export default function HomeWorker({ navigation }) {
   const [profile, setProfile] = useState({ name: "User" })
   const [wallet, setWallet] = useState({ amount: 0 })
   const [isloading, setIsloading] = useState(false)
@@ -163,7 +163,7 @@ export default function HomeClient({ navigation }) {
             onPress={() => navigation.navigate('CreateNitip')}
           >
             <Image
-              source={require('../assets/shopping-bag.png')}
+              source={require('../../assets/shopping-bag.png')}
               style={{ width: 50, height: 50 }}
             />
             <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Nitip</Text>
@@ -173,7 +173,7 @@ export default function HomeClient({ navigation }) {
             onPress={() => navigation.navigate('CreateBebersih')}
           >
             <Image
-              source={require('../assets/bucket.png')}
+              source={require('../../assets/bucket.png')}
               style={{ width: 50, height: 50 }}
             />
             <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Bebersih</Text>
@@ -190,25 +190,25 @@ export default function HomeClient({ navigation }) {
           >
             <View style={styles.slide}>
               <Image
-                source={require('../assets/banner1.png')}
+                source={require('../../assets/banner1.png')}
                 style={styles.image}
               />
             </View>
             <View style={styles.slide}>
               <Image
-                source={require('../assets/banner2.png')}
+                source={require('../../assets/banner2.png')}
                 style={styles.image}
               />
             </View>
             <View style={styles.slide}>
               <Image
-                source={require('../assets/banner3.png')}
+                source={require('../../assets/banner3.png')}
                 style={styles.image}
               />
             </View>
             <View style={styles.slide}>
               <Image
-                source={require('../assets/banner4.png')}
+                source={require('../../assets/banner4.png')}
                 style={styles.image}
               />
             </View>

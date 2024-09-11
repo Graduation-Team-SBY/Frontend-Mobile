@@ -1,9 +1,9 @@
 import { StyleSheet, Text, TextInput, View, TouchableHighlight } from "react-native";
-import { instanceAxios as axios } from "../config/axiosInstance";
+import { instanceAxios as axios } from "../../config/axiosInstance";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { useState } from "react"
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
-export default function CreateNitipScreen({ navigation }) {
+export default function CreateNitip({ navigation }) {
   const [fee, setFee] = useState(0)
   const [description, setDescription] = useState("")
   const [address, setAddress] = useState("")

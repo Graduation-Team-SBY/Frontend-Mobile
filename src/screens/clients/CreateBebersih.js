@@ -9,14 +9,14 @@ import {
   Button,
 } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { instanceAxios as axios } from '../config/axiosInstance';
+import { instanceAxios as axios } from '../../config/axiosInstance';
 import { useEffect, useState } from 'react';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import * as ImagePicker from 'expo-image-picker';
 import { useCameraPermissions } from 'expo-camera';
 import { getItemAsync } from 'expo-secure-store';
 
-export default function CreateBebersihScreen({ navigation }) {
+export default function CreateBebersih({ navigation }) {
   const [fee, setFee] = useState(0);
   const [description, setDescription] = useState('');
   const [address, setAddress] = useState('');
