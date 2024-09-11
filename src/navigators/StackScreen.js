@@ -8,7 +8,6 @@ import ClientRegisterScreen from "../screens/ClientRegisterScreen";
 import WorkerRegisterScreen from "../screens/WorkerRegisterScreen";
 import CreateBebersihScreen from "../screens/CreateBebersihScreen";
 import CreateNitipScreen from "../screens/CreateNitipScreen";
-import Testing from "../screens/Testing";
 const Stack = createNativeStackNavigator();
 
 

@@ -54,7 +54,7 @@ export default function HomeClient({ navigation }) {
       // Call your backend to get the payment token
       console.log('jalan');
       const token = await getItemAsync('access_token');
-      const { data } = await instanceAxios({
+      const { data } = await axios({
         method: 'POST',
         url: '/payment/topup',
         headers: {
