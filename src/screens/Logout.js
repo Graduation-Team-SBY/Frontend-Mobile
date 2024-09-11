@@ -2,7 +2,7 @@ import * as SecureStore from "expo-secure-store"
 import { AuthContext } from '../contexts/auth';
 import { useContext } from "react"
 import { View, Button } from "react-native";
-export default function Logout() {
+export default function Logout({ navigation }) {
   const { setIsSignedIn } = useContext(AuthContext)
   const logoutHandler = async () => {
     try {
@@ -16,6 +16,7 @@ export default function Logout() {
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <Button title="Logout" onPress={logoutHandler} />
+      <Button title="Order Detail" onPress={() => navigation.navigate("WorkerOrderDetail")} />
     </View>
   );
 };

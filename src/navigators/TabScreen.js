@@ -1,13 +1,10 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Logout from "../screens/Logout";
-import HomeClient from "../screens/clients/HomeClient";
-import ClientProfile from "../screens/clients/ClientProfile";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
-import ClientOrderHistories from "../screens/clients/ClientOrderHistories";
 import HomeWorker from "../screens/workers/HomeWorker";
 import WorkerProfile from "../screens/workers/WorkerProfile";
-import WorkerJobHistories from "../screens/workers/WorkerJobHistories";
+import AllJobs from "../screens/workers/AllJobs";
 
 const Tab = createBottomTabNavigator();
 
@@ -58,6 +55,21 @@ export default function TabScreen(props) {
           }}
         /> */}
         <Tab.Screen
+          name="AllJobs"
+          component={AllJobs}
+          options={{
+            tabBarIcon: ({ color, size, focused }) => {
+              return focused ? (
+                <Ionicons name="briefcase" size={size} color="#1E204C" />
+              ) : (
+                <Ionicons name="briefcase-outline" size={size} color="#1E204C" />
+              )
+            },
+            tabBarShowLabel: false,
+            headerTitle: "Pekerjaan"
+          }}
+        />
+        <Tab.Screen
           name="WorkerProfile"
           component={WorkerProfile}
           options={{
@@ -86,21 +98,6 @@ export default function TabScreen(props) {
             headerTitle: "Order Histories"
           }}
         /> */}
-        <Tab.Screen
-          name="WorkerJobHistories"
-          component={WorkerJobHistories}
-          options={{
-            tabBarIcon: ({ color, size, focused }) => {
-              return focused ? (
-                <MaterialIcons name="history" size={size} color="#1E204C" />
-              ) : (
-                <MaterialIcons name="history" size={size} color="#1E204C" />
-              )
-            },
-            tabBarShowLabel: false,
-            headerTitle: "Order Histories"
-          }}
-        />
         <Tab.Screen name="Logout" component={Logout} />
       </Tab.Navigator>
     </>

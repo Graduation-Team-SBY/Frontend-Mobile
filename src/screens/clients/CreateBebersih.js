@@ -4,8 +4,6 @@ import {
   TextInput,
   View,
   TouchableHighlight,
-  Pressable,
-  Platform,
   Button,
 } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -45,7 +43,7 @@ export default function CreateBebersih({ navigation }) {
     setImgResult(imgResult.concat({ uri: localUri, name: filename, type }));
   }
 
-  
+
 
   const createJob = async () => {
     setIsLoading(true);
@@ -83,19 +81,19 @@ export default function CreateBebersih({ navigation }) {
     }
   };
 
-    if (!permission) {
-      return <View />;
-    }
+  if (!permission) {
+    return <View />;
+  }
 
-    if (!permission.granted) {
-      return (
-        <View style={styles.container}>
-          <Text style={styles.message}>
-            We need your permission to show the camera
-          </Text>
-          <Button onPress={requestPermission} title='grant permission' />
-        </View>
-      );
+  if (!permission.granted) {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.message}>
+          We need your permission to show the camera
+        </Text>
+        <Button onPress={requestPermission} title='grant permission' />
+      </View>
+    );
   }
   return (
     <>
