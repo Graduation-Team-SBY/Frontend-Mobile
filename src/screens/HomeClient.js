@@ -1,13 +1,52 @@
 import { LinearGradient } from 'expo-linear-gradient';
-import React from 'react';
+import { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity } from 'react-native';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import { SignalIcon } from 'react-native-heroicons/solid';
 import { CurrencyDollarIcon } from 'react-native-heroicons/solid';
 import Swiper from 'react-native-swiper';
-
+import { instanceAxios as axios } from '../config/axiosInstance';
+import * as SecureStore from "expo-secure-store";
+import { formatCurrencyRupiah } from '../helpers/currency';
 export default function HomeClient({ navigation }) {
+  const [profile, setProfile] = useState({ name: "User" })
+  const [wallet, setWallet] = useState({ amount: 0 })
+  const [isloading, setIsloading] = useState(false)
+
+  const fetchProfile = async () => {
+    try {
+      setIsloading(true)
+      let access_token = await SecureStore.getItemAsync("access_token")
+      const profileResponse = await axios({
+        method: 'GET',
+        url: 'clients/profile',
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      });
+
+      const walletResponse = await axios({
+        method: 'GET',
+        url: '/profile/wallet',
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      });
+      setProfile(profileResponse.data)
+      setWallet(walletResponse.data)
+    } catch (err) {
+      console.log(err)
+    } finally {
+      setIsloading(false)
+    }
+  }
+
+  useEffect(() => {
+
+    fetchProfile()
+  }, [])
+
   return (
     <ScrollView style={{ backgroundColor: '#FAF9FE' }}>
       <View style={styles.container}>
@@ -23,9 +62,9 @@ export default function HomeClient({ navigation }) {
             <CurrencyDollarIcon size={32} color={'#FFF'} />
           </View>
           <View>
-            <Text style={styles.textUser}>Aditya Saputra</Text>
+            <Text style={styles.textUser}>{profile?.name}</Text>
             <Text style={{ color: 'white', fontSize: 32, fontWeight: 'bold' }}>
-              Rp 0,00
+              {formatCurrencyRupiah(wallet?.amount)}
             </Text>
           </View>
           <View style={styles.ewalletJustify}>
@@ -44,7 +83,7 @@ export default function HomeClient({ navigation }) {
         </View>
         <View>
           <Text style={styles.title}>
-            Halo, <Text style={styles.span}>Adit</Text> !
+            Halo, <Text style={styles.span}>{profile?.name}</Text> !
           </Text>
         </View>
         <Text style={{ fontSize: 24, fontWeight: 'bold' }}>
