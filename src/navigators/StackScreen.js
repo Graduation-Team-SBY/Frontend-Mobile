@@ -8,6 +8,7 @@ import ClientRegisterScreen from "../screens/ClientRegisterScreen";
 import WorkerRegisterScreen from "../screens/WorkerRegisterScreen";
 import CreateBebersihScreen from "../screens/CreateBebersihScreen";
 import CreateNitipScreen from "../screens/CreateNitipScreen";
+import Testing from "../screens/Testing";
 const Stack = createNativeStackNavigator();
 
 
@@ -18,6 +19,7 @@ export default function RegStackScreen() {
       <SafeAreaProvider>
         <SafeAreaView style={styles.safeArea}>
           <Stack.Navigator>
+            {/* <Stack.Screen name="Testing" component={Testing} /> */}
             <Stack.Screen
               name="LandingPage"
               component={LandingPage}

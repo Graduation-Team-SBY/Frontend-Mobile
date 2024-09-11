@@ -47,6 +47,74 @@ export default function HomeClient({ navigation }) {
     fetchProfile()
   }, [])
 
+  const [paymentUrl, setPaymentUrl] = useState(null);
+
+  const handlePayment = async () => {
+    try {
+      // Call your backend to get the payment token
+      console.log('jalan');
+      const token = await getItemAsync('access_token');
+      const { data } = await instanceAxios({
+        method: 'POST',
+        url: '/payment/topup',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        data: {
+          amount: Number(10000),
+        },
+      });
+
+      const redirect_url = `https://app.sandbox.midtrans.com/snap/v2/vtweb/${data.trans_token}`;
+
+      setPaymentUrl(redirect_url);
+    } catch (error) {
+      console.log(error.response.data.message);
+    }
+  };
+
+  // return (
+  //   <View style={{ flex: 1 }}>
+  //     {paymentUrl ? (
+  //       <WebView
+  //         source={{ uri: paymentUrl }}
+  //         onNavigationStateChange={async (navState) => {
+  //           if (navState.url.includes('transaction-status=success')) {
+  //             // Handle payment success
+  //             const token = await getItemAsync('access_token');
+  //             await axios({
+  //               method: 'patch',
+  //               url: '/profile/wallet',
+  //               headers: {
+  //                 Authorization: `Bearer ${token}`,
+  //               },
+  //               data: {
+  //                 topupId: data.topupId,
+  //               },
+  //             });
+
+  //             await fetchWallet();
+  //             setAmount(null);
+  //             // toast.success('Payment Success!');
+  //             console.log('Payment Success!');
+  //           } else if (navState.url.includes('transaction-status=pending')) {
+  //             // Handle payment pending
+  //             setAmount(null);
+  //             // toast.info('Menunggu pembayaran Anda!');
+  //             console.log('Payment Waiting!');
+  //           } else if (navState.url.includes('transaction-status=error')) {
+  //             // Handle payment error
+  //             setAmount(null);
+  //             // toast.error('Pembayaran Gagal!');
+  //             console.log('Payment Gagal!');
+  //           }
+  //         }}
+  //       />
+  //     ) : (
+  //       <Button title="Pay Now" onPress={handlePayment} />
+  //     )}
+  //   </View>
+  // );
   return (
     <ScrollView style={{ backgroundColor: '#FAF9FE' }}>
       <View style={styles.container}>
@@ -69,10 +137,10 @@ export default function HomeClient({ navigation }) {
           </View>
           <View style={styles.ewalletJustify}>
             <View style={styles.ewalletButton}>
-              <View style={styles.topUpLogo}>
+              <TouchableOpacity style={styles.topUpLogo}>
                 <FontAwesome name="credit-card" size={20} color="black" />
                 <Text>Top Up</Text>
-              </View>
+              </TouchableOpacity>
               <View style={styles.topUpLogo}>
                 <FontAwesome5 name="arrow-circle-up" size={20} color="black" />
                 <Text>Transfer</Text>
@@ -90,14 +158,20 @@ export default function HomeClient({ navigation }) {
           Mau ngapain hari ini?
         </Text>
         <View style={styles.containerCard}>
-          <TouchableOpacity style={styles.card} onPress={() => navigation.navigate("CreateNitip")}>
+          <TouchableOpacity
+            style={styles.card}
+            onPress={() => navigation.navigate('CreateNitip')}
+          >
             <Image
               source={require('../assets/shopping-bag.png')}
               style={{ width: 50, height: 50 }}
             />
             <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Nitip</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.card} onPress={() => navigation.navigate("CreateBebersih")}>
+          <TouchableOpacity
+            style={styles.card}
+            onPress={() => navigation.navigate('CreateBebersih')}
+          >
             <Image
               source={require('../assets/bucket.png')}
               style={{ width: 50, height: 50 }}
@@ -237,7 +311,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     resizeMode: 'cover',
-    borderRadius: 12
+    borderRadius: 12,
   },
   dot: {
     backgroundColor: 'rgba(0,0,0,.2)',
