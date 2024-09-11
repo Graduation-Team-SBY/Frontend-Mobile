@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { instanceAxios as axios } from '../../config/axiosInstance';
 import NewestJobCard from '../../components/NewestJobCard';
-export default function AllJobs() {
+export default function AllJobs({ navigation }) {
   const [jobs, setJobs] = useState([]);
 
   const fetchJobs = async () => {
@@ -31,7 +31,7 @@ export default function AllJobs() {
     <>
       <ScrollView style={{ backgroundColor: '#FAF9FE' }}>
         <View style={styles.container}>
-          { jobs.map((val, i) => <NewestJobCard key={i} job={val}/>) }
+          {jobs.map((val, i) => <NewestJobCard key={i} job={val} navigation={navigation} />)}
         </View>
       </ScrollView>
     </>

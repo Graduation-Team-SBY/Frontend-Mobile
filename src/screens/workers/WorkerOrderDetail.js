@@ -8,18 +8,17 @@ import Swiper from "react-native-swiper";
 export default function WorkerOrderDetail({ navigation, route }) {
   const [job, setJob] = useState({})
   const [isLoading, setIsLoading] = useState(false)
-  console.log(route)
   const fetchPost = async () => {
     try {
       setIsLoading(true)
       const { data } = await axios({
-        url: `/jobs/${"66e13250e973b18a09afcb04"}`,
+        url: `/jobs/${route.params.jobId}`,
         method: "GET",
         headers: {
           Authorization: `Bearer ${await SecureStore.getItemAsync("access_token")}`
         }
       })
-      console.log(data)
+      // console.log(data)
       setJob(data)
     } catch (err) {
       console.log(err)
@@ -35,7 +34,7 @@ export default function WorkerOrderDetail({ navigation, route }) {
 
   if (isLoading) {
     return (
-      <SafeAreaProvider><SafeAreaView style={styles.safeArea}>Loading....</SafeAreaView></SafeAreaProvider>)
+      <SafeAreaProvider><SafeAreaView style={styles.safeArea}><Text>Loading....</Text></SafeAreaView></SafeAreaProvider>)
   }
 
   return (
@@ -45,15 +44,27 @@ export default function WorkerOrderDetail({ navigation, route }) {
           <View style={styles.container}>
             <View style={styles.header}>
               <View style={styles.image}>
-                <Swiper
-                  autoplay
-                  autoplayTimeout={3} // delay 3 detik
-                  loop={true}
-                  showsPagination={true}
-                  dotStyle={styles.dot}
-                  activeDotStyle={styles.activeDot}>
-                  {/* {job?.images?.map(image => <Image source={{ uri: image }} />)} */}
-                </Swiper>
+                {job?.images && job.images.length > 0 ? (
+                  <Swiper
+                    autoplay
+                    autoplayTimeout={3}
+                    loop={true}
+                    showsPagination={true}
+                    dotStyle={styles.dot}
+                    activeDotStyle={styles.activeDot}
+                  >
+                    {job.images.map((img, index) => (
+                      <Image
+                        key={index}
+                        source={{ uri: img }}
+                        style={styles.swiperImage}
+                      />
+                    ))}
+                  </Swiper>
+                ) : (
+                  <View style={styles.placeholderImage} />
+                )}
+
               </View>
               <Text style={styles.headerTitle}>{job?.title}</Text>
               <Text style={styles.headerFee}>{formatCurrencyRupiah(job?.fee)}</Text>
@@ -68,15 +79,17 @@ export default function WorkerOrderDetail({ navigation, route }) {
             </View>
             <View style={styles.detailGroup}>
               <Text style={styles.detailGroupTitle}>Catatan Alamat</Text>
-              {job?.addressNotes?.length > 0 ? (<Text style={[styles.detailGroupSubtitle]}>({job?.addressNotes})</Text>) : (<Text style={[styles.detailGroupSubtitle, styles.emptyText]}>(Tidak ada)</Text>)}
+              <Text style={[styles.detailGroupSubtitle, job?.addressNotes ? {} : styles.emptyText]}>
+                {job?.addressNotes || '(Tidak ada)'}
+              </Text>
             </View>
           </View>
         </ScrollView>
         <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.secondaryButton} onPress={() => navigation.pop()}>
+          <TouchableOpacity style={styles.secondaryButton} onPress={() => { }}>
             <Text style={styles.secondaryText}>Pesan</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.primaryButton} onPress={() => { }}>
+          <TouchableOpacity style={styles.primaryButton} onPress={() => { navigation.pop() }}>
             <Text style={styles.primaryText}>Selesai</Text>
           </TouchableOpacity>
         </View>
@@ -183,4 +196,9 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     margin: 3,
   },
+  swiperImage: {
+    width: '100%',
+    height: '100%',
+    resizeMode: 'cover',
+  }
 });

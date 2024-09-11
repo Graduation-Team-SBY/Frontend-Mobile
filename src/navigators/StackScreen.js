@@ -57,7 +57,7 @@ export function AuthStackScreen() {
         />
         <Stack.Screen name="CreateBebersih" component={CreateBebersih} options={{ title: "" }} />
         <Stack.Screen name="CreateNitip" component={CreateNitip} options={{ title: "" }} />
-        <Stack.Screen name="WorkerOrderDetail" component={WorkerOrderDetail} options={{ title: "" }} />
+        <Stack.Screen name="WorkerOrderDetail" component={WorkerOrderDetail} options={({ route }) => ({ title: route.params.title })} />
       </Stack.Navigator>
     </>
   )
