@@ -1,18 +1,13 @@
 import { LinearGradient } from 'expo-linear-gradient';
 import { useState, useEffect } from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  ScrollView,
-} from 'react-native';
+import { StyleSheet, Text, View, ScrollView, Pressable } from 'react-native';
 import { CurrencyDollarIcon } from 'react-native-heroicons/solid';
-import Swiper from 'react-native-swiper';
 import { instanceAxios as axios } from '../../config/axiosInstance';
 import * as SecureStore from 'expo-secure-store';
 import { formatCurrencyRupiah } from '../../helpers/currency';
 import NewestJobCard from '../../components/NewestJobCard';
+import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
+
 export default function HomeWorker({ navigation }) {
   const [profile, setProfile] = useState({ name: 'User' });
   const [wallet, setWallet] = useState({ amount: 0 });
@@ -95,54 +90,24 @@ export default function HomeWorker({ navigation }) {
             Selamat datang, <Text style={styles.span}>{profile?.name}</Text> !
           </Text>
         </View>
-        {/* <View style={styles.containerSwiper}>
-          <Swiper
-            autoplay
-            autoplayTimeout={3} // delay 3 detik
-            loop={true}
-            showsPagination={true}
-            dotStyle={styles.dot}
-            activeDotStyle={styles.activeDot}
-          >
-            <View style={styles.slide}>
-              <Image
-                source={require('../../assets/banner1.png')}
-                style={styles.image}
-              />
-            </View>
-            <View style={styles.slide}>
-              <Image
-                source={require('../../assets/banner2.png')}
-                style={styles.image}
-              />
-            </View>
-            <View style={styles.slide}>
-              <Image
-                source={require('../../assets/banner3.png')}
-                style={styles.image}
-              />
-            </View>
-            <View style={styles.slide}>
-              <Image
-                source={require('../../assets/banner4.png')}
-                style={styles.image}
-              />
-            </View>
-          </Swiper>
-        </View> */}
-        <View
-          style={styles.quotes}
-        >
+        <View style={styles.quotes}>
           <Text style={{ fontSize: 24, fontWeight: '600' }}>YangTu</Text>
           <Text style={{ color: '#4b5563', fontSize: 14 }}>
             Bekerja yang didasarkan pada pekerjaan sementara, tugas - tugas
             jangka pendek, atau kontrak pekerjaan yang fleksibel
           </Text>
         </View>
-        <Text style={{ fontSize: 24, fontWeight: 'bold' }}>Pekerjaan Terbaru</Text>
-        { newestJob.map((val, i) => {
-          return <NewestJobCard key={i} job={val}/>
-        }) }
+        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+          <Text style={{ fontSize: 24, fontWeight: 'bold' }}>
+            Pekerjaan Terbaru
+          </Text>
+          <Pressable onPress={() => navigation.navigate('AllJobs')}>
+            <FontAwesome6 name="arrow-right-long" size={16} color="black" />
+          </Pressable>
+        </View>
+        {newestJob.map((val, i) => {
+          return <NewestJobCard key={i} job={val} />;
+        })}
       </View>
     </ScrollView>
   );
@@ -235,5 +200,5 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     justifyContent: 'center',
     gap: 4,
-  }
+  },
 });
