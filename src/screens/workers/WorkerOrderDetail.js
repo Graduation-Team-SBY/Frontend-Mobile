@@ -112,7 +112,7 @@ export default function WorkerOrderDetail({ navigation, route }) {
         </ScrollView>
         <View style={styles.buttonContainer}>
           {job.workerId === profile.userId ? (<>
-            <TouchableOpacity style={styles.secondaryButton} onPress={() => { }}>
+            <TouchableOpacity style={styles.secondaryButton} onPress={() => { navigation.navigate("Chat", { jobId: job._id }) }}>
               <Text style={styles.secondaryText}>Pesan</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.primaryButton} onPress={() => { navigation.navigate("WorkerVerificationOrder", { job }) }}>

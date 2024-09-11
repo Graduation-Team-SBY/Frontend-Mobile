@@ -1,10 +1,9 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import Logout from "../screens/Logout";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import HomeWorker from "../screens/workers/HomeWorker";
 import WorkerProfile from "../screens/workers/WorkerProfile";
 import AllJobs from "../screens/workers/AllJobs";
+import AllCurrentJobs from "../screens/workers/AllCurrentJobs";
 
 const Tab = createBottomTabNavigator();
 
@@ -70,6 +69,21 @@ export default function TabScreen(props) {
           }}
         />
         <Tab.Screen
+          name="AllCurrentJobs"
+          component={AllCurrentJobs}
+          options={{
+            tabBarIcon: ({ color, size, focused }) => {
+              return focused ? (
+                <Ionicons name="briefcase" size={size} color="#1E204C" />
+              ) : (
+                <Ionicons name="briefcase-outline" size={size} color="#1E204C" />
+              )
+            },
+            tabBarShowLabel: false,
+            headerTitle: "Pekerjaan"
+          }}
+        />
+        <Tab.Screen
           name="WorkerProfile"
           component={WorkerProfile}
           options={{
@@ -98,7 +112,7 @@ export default function TabScreen(props) {
             headerTitle: "Order Histories"
           }}
         /> */}
-        <Tab.Screen name="Logout" component={Logout} />
+        {/* <Tab.Screen name="Logout" component={Logout} /> */}
       </Tab.Navigator>
     </>
   );

@@ -12,7 +12,7 @@ import { formatCurrencyRupiah } from '../../helpers/currency';
 import { launchCameraAsync, useCameraPermissions } from 'expo-image-picker';
 import { useState } from 'react';
 import { instanceAxios as axios } from '../../config/axiosInstance';
-
+import { getItemAsync } from 'expo-secure-store';
 export default function VerificationOrder({ route, navigation }) {
   const [permission, requestPermission] = useCameraPermissions();
   const [imgResult, setImgResult] = useState([]);
@@ -55,13 +55,33 @@ export default function VerificationOrder({ route, navigation }) {
     setImgResult(imgResult.concat({ uri: localUri, name: filename, type }));
   }
 
-  const verifyOrder = async () => {
-    try {
 
+  const handleVerificationSubmit = async () => {
+
+    const formData = new FormData();
+    for (const val of imgResult) {
+      formData.append('image', val);
+    }
+    try {
+      const { data } = await axios({
+        method: "PATCH",
+        url: `/workers/jobs/${route.params.job._id}/worker`,
+        headers: {
+          Authorization: `Bearer ${await getItemAsync("access_token")}`,
+          "Content-Type": "multipart/form-data",
+        },
+        data: formData,
+      });
+
+
+
+      navigation.navigate("TabScreen");
     } catch (err) {
+      console.log(err);
+    } finally {
 
     }
-  }
+  };
 
   return (
     <View style={styles.container}>
@@ -117,7 +137,7 @@ export default function VerificationOrder({ route, navigation }) {
             <Text>{route.params.job.description}</Text>
           </View>
         </View>
-        <TouchableOpacity style={styles.button} onPress={ }>
+        <TouchableOpacity style={styles.button} onPress={handleVerificationSubmit}>
           <Text style={styles.buttonText}>Kirim Verifikasi</Text>
         </TouchableOpacity>
       </View>

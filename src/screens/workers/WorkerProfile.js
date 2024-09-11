@@ -8,8 +8,20 @@ import {
 } from 'react-native';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import AntDesign from '@expo/vector-icons/AntDesign';
-
+import Feather from '@expo/vector-icons/Feather';
+import { deleteItemAsync } from 'expo-secure-store';
+import { AuthContext } from '../../contexts/auth';
+import { useContext } from "react"
 export default function WorkerProfile() {
+  const { setIsSignedIn } = useContext(AuthContext)
+  const handlerLogOut = async () => {
+    try {
+      await Promise.all([deleteItemAsync("access_token"), deleteItemAsync("role")])
+      setIsSignedIn(false)
+    } catch (err) {
+      console.log(err)
+    }
+  }
   return (
     <ScrollView>
       <View style={styles.container}>
@@ -29,31 +41,62 @@ export default function WorkerProfile() {
               </Text>
             </View>
           </View>
-          <View>
-            <TouchableHighlight
-              style={{
-                backgroundColor: '#09CC9E',
-                padding: 8,
-                borderRadius: 100,
-              }}
-            >
-              <View
+          <View style={{ flex: 1, flexDirection: "row", gap: 16 }}>
+            <View style={{ flex: 1 }}>
+              <TouchableHighlight
                 style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  gap: 12,
-                  justifyContent: 'center',
+                  backgroundColor: '#09CC9E',
+                  padding: 8,
+                  borderRadius: 100,
                 }}
               >
-                <FontAwesome6 name="edit" size={24} color="#FFF" />
-                <Text
-                  style={{ color: '#FFF', fontSize: 16, fontWeight: '600' }}
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    gap: 12,
+                    justifyContent: 'center',
+                  }}
                 >
-                  Edit Profile
-                </Text>
-              </View>
-            </TouchableHighlight>
+                  <FontAwesome6 name="edit" size={24} color="#FFF" />
+                  <Text
+                    style={{ color: '#FFF', fontSize: 16, fontWeight: '600' }}
+                  >
+                    Edit Profile
+                  </Text>
+                </View>
+              </TouchableHighlight>
+            </View>
+            <View style={{ flex: 1 }}>
+              <TouchableHighlight
+                underlayColor={"#f87171"}
+                style={{
+                  backgroundColor: 'transparent',
+                  padding: 8,
+                  borderRadius: 100,
+                  borderWidth: 1.5,
+                  borderColor: "#f87171"
+                }}
+                onPress={handlerLogOut}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    gap: 12,
+                    justifyContent: 'center',
+                  }}
+                >
+                  <Feather name="log-out" size={24} color="#f87171" />
+                  <Text
+                    style={{ color: '#f87171', fontSize: 16, fontWeight: '600' }}
+                  >
+                    Logout
+                  </Text>
+                </View>
+              </TouchableHighlight>
+            </View>
           </View>
+
         </View>
         <View style={{ gap: 24 }}>
           <View style={{ flexDirection: 'row', alignItems: 'center', gap: 64 }}>

@@ -10,6 +10,7 @@ import CreateBebersih from "../screens/clients/CreateBebersih";
 import CreateNitip from "../screens/clients/CreateNitip";
 import WorkerOrderDetail from "../screens/workers/WorkerOrderDetail";
 import WorkerVerificationOrder from "../screens/workers/VerificationOrder"
+import Chat from "../screens/Chat";
 const Stack = createNativeStackNavigator();
 
 
@@ -61,6 +62,7 @@ export function AuthStackScreen() {
         <Stack.Screen name="WorkerOrderDetail" component={WorkerOrderDetail} options={({ route }) => ({ title: route.params.title })} />
         {/* <Stack.Screen name="" component={}></Stack.Screen> */}
         <Stack.Screen name="WorkerVerificationOrder" component={WorkerVerificationOrder} />
+        <Stack.Screen name="Chat" component={Chat} options={{ title: "Chat Room" }} />
       </Stack.Navigator>
     </>
   )
