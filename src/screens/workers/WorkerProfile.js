@@ -7,13 +7,17 @@ import {
   View,
 } from 'react-native';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
-import AntDesign from '@expo/vector-icons/AntDesign';
 import Feather from '@expo/vector-icons/Feather';
-import { deleteItemAsync } from 'expo-secure-store';
+import { deleteItemAsync, getItemAsync } from 'expo-secure-store';
 import { AuthContext } from '../../contexts/auth';
-import { useContext } from "react"
-export default function WorkerProfile() {
-  const { setIsSignedIn } = useContext(AuthContext)
+import { useContext, useEffect, useState } from "react"
+import { instanceAxios as axios } from '../../config/axiosInstance';
+import { age } from '../../helpers/age';
+import { formatDateMonth } from '../../helpers/formatDate';
+import WorkerReview from '../../components/WorkerReview';
+export default function WorkerProfile({ navigation }) {
+  const [profile, setProfile] = useState({});
+  const { setIsSignedIn } = useContext(AuthContext);
   const handlerLogOut = async () => {
     try {
       await Promise.all([deleteItemAsync("access_token"), deleteItemAsync("role")])
@@ -22,22 +26,60 @@ export default function WorkerProfile() {
       console.log(err)
     }
   }
+  
+  const [testi, setTesti] = useState([]);
+  const fetchTestimoni = async () => {
+    try {
+      const { data } = await axios({
+        method: 'GET',
+        url: '/workers/profile/reviews',
+        headers: {
+          Authorization: `Bearer ${await getItemAsync('access_token')}`,
+        },
+      });
+
+      setTesti(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  async function getProfile() {
+    try {
+      const access_token = await getItemAsync('access_token')
+      const { data } = await axios({
+        method: 'GET',
+        url: 'workers/profile',
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      });
+      setProfile(data);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  useEffect(() => {
+    getProfile();
+    fetchTestimoni();
+  }, [])
   return (
-    <ScrollView>
+    <ScrollView style={{ backgroundColor: '#FAF9FE' }}>
       <View style={styles.container}>
         {/* <Text style={{ fontSize: 36, fontWeight: 'bold' }}>My Profile</Text> */}
         <View style={{ gap: 32 }}>
           <View style={{ flexDirection: 'row', alignItems: 'center', gap: 32 }}>
             <Image
               style={{ width: 95, height: 95, borderRadius: 100 }}
-              src="https://images.unsplash.com/photo-1725590249885-de0796581827?q=80&w=3087&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+              src={profile.profilePicture}
             />
             <View>
-              <Text style={{ fontSize: 24, fontWeight: '600' }}>Aditya</Text>
+              <Text style={{ fontSize: 24, fontWeight: '600' }}>{profile.name ? profile.name : '(Belum Diisi)'}</Text>
               <Text
                 style={{ fontSize: 16, fontWeight: '300', color: '#AFAFAF' }}
               >
-                aditya@gmail.com
+                {profile.userData?.email}
               </Text>
             </View>
           </View>
@@ -49,6 +91,7 @@ export default function WorkerProfile() {
                   padding: 8,
                   borderRadius: 100,
                 }}
+                onPress={() => navigation.navigate('EditProfile')}
               >
                 <View
                   style={{
@@ -105,31 +148,31 @@ export default function WorkerProfile() {
               <Text
                 style={{ fontSize: 20, fontWeight: '500', color: '#17A34A' }}
               >
-                Jalu
+                { profile.userData?.role === 'worker' ? 'Yasa' : 'Jalu' }
               </Text>
             </View>
             <View>
               <Text style={styles.profileDataTitle}>Umur</Text>
-              <Text style={styles.profileDataText}>36</Text>
+              <Text style={styles.profileDataText}>{ profile.dateOfBirth ? age(profile.dateOfBirth) : '(Belum Diisi)'}</Text>
             </View>
           </View>
           <View>
             <View>
               <Text style={styles.profileDataTitle}>Nomor Handphone</Text>
-              <Text style={styles.profileDataText}>0811300111031</Text>
+              <Text style={styles.profileDataText}>{ profile.userData?.phoneNumber }</Text>
             </View>
           </View>
           <View>
             <View>
-              <Text style={styles.profileDataTitle}>Date of Birth</Text>
-              <Text style={styles.profileDataText}>27-11-2002</Text>
+              <Text style={styles.profileDataTitle}>Tanggal Lahir</Text>
+              <Text style={styles.profileDataText}>{ profile.dateOfBirth ? formatDateMonth(new Date(profile.dateOfBirth)) : '(Belum Diisi)'}</Text>
             </View>
           </View>
           <View>
             <View>
               <Text style={styles.profileDataTitle}>Alamat</Text>
               <Text style={styles.profileDataText}>
-                Jl. jalan coba aja dulu
+                { profile.address ? profile.address : '(Belum Diisi)' }
               </Text>
             </View>
           </View>
@@ -140,44 +183,9 @@ export default function WorkerProfile() {
             Baca Ulasan Terpercaya Dari{' '}
             <Text style={{ color: '#05ECAE' }}>Pelanggan</Text> Kami
           </Text>
-
-          <View style={styles.containerReviews}>
-            <View style={styles.cardReview}>
-              {/* Avatar, name, rating */}
-              <View
-                style={{ flexDirection: 'row', gap: 15, alignItems: 'center' }}
-              >
-                <Image
-                  style={{ width: 50, height: 50, borderRadius: 100 }}
-                  src="https://images.unsplash.com/photo-1725590249885-de0796581827?q=80&w=3087&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                />
-                <View>
-                  <Text style={{ fontWeight: '700' }}>Amelia Watsitooya</Text>
-                  <Text style={{ fontWeight: '600' }}>
-                    <AntDesign name="star" size={16} color="#eab308" /> 4.9
-                  </Text>
-                </View>
-              </View>
-              {/* Pesan */}
-              <View style={{ marginVertical: 18 }}>
-                <Text style={{ fontWeight: '700' }}>Pesan:</Text>
-                <Text>Lorem ipsum due mennls skdjfksdf kjjpa skdjkh sd</Text>
-              </View>
-              {/* Foto */}
-              <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 10 }}>
-                {/* contoh looping */}
-                {[1, 2, 3, 4].map((_, index) => {
-                  return (
-                    <Image
-                      key={index}
-                      style={{ width: 50, height: 50, borderRadius: 10 }}
-                      src="https://images.unsplash.com/photo-1725590249885-de0796581827?q=80&w=3087&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                    />
-                  );
-                })}
-              </View>
-            </View>
-          </View>
+          { testi.map((val, i) => {
+            return <WorkerReview key={i} review={val}/>
+          }) }
         </View>
       </View>
     </ScrollView>
@@ -189,6 +197,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     padding: 10,
     borderRadius: 20,
+    gap: 16
   },
   titleReviews: {
     fontWeight: '700',

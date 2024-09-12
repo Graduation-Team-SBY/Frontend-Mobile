@@ -4,6 +4,7 @@ import HomeWorker from "../screens/workers/HomeWorker";
 import WorkerProfile from "../screens/workers/WorkerProfile";
 import AllJobs from "../screens/workers/AllJobs";
 import AllCurrentJobs from "../screens/workers/AllCurrentJobs";
+import ProfileStack from "./ProfileStack";
 
 const Tab = createBottomTabNavigator();
 
@@ -80,12 +81,12 @@ export default function TabScreen(props) {
               )
             },
             tabBarShowLabel: false,
-            headerTitle: "Pekerjaan"
+            headerTitle: "Pekerjaan Saya"
           }}
         />
         <Tab.Screen
           name="WorkerProfile"
-          component={WorkerProfile}
+          component={ProfileStack}
           options={{
             tabBarIcon: ({ color, size, focused }) =>
               focused ? (
