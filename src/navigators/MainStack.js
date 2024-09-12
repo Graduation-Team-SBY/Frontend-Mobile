@@ -4,6 +4,7 @@ import { useState, useContext, useEffect } from "react";
 import { AuthContext } from "../contexts/auth";
 import * as SecureStore from "expo-secure-store";
 import TabScreen from "./TabScreen";
+import { StatusBar } from "expo-status-bar";
 
 export default function MainStack(props) {
   const { isSignedIn, setIsSignedIn } = useContext(AuthContext);
@@ -26,7 +27,9 @@ export default function MainStack(props) {
   }, []);
   return (
     <>
+
       <NavigationContainer>
+        <StatusBar style="dark"/>
         {isSignedIn ? <AuthStackScreen /> : <StackScreen />}
       </NavigationContainer>
     </>
