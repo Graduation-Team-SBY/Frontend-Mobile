@@ -1,125 +1,138 @@
 import * as SecureStore from "expo-secure-store";
-import { AuthContext } from "../contexts/auth";
-import { useContext } from "react";
+import { useContext, useState, useEffect, useRef } from "react";
 import {
   View,
-  Button,
-  StyleSheet,
   ScrollView,
   Text,
   Image,
   TouchableOpacity,
   TextInput,
+  StyleSheet
 } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
-// export default function Logout() {
-//   const { setIsSignedIn } = useContext(AuthContext);
-//   const logoutHandler = async () => {
-//     try {
-//       await Promise.all([
-//         SecureStore.deleteItemAsync("role"),
-//         SecureStore.deleteItemAsync("access_token"),
-//       ]);
-//       setIsSignedIn(false);
-//     } catch (err) {
-//       console.log(err);
-//     }
-//   };
-// <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-//   <Button title="Logout" onPress={logoutHandler} />
-// </View>
+import newSocket from "../config/socketInstance";
 
-//   return (
-//     <View style={styles.container}>
-//       <ScrollView style={styles.chatContainer}>
-//         <View style={styles.messageContainer}>
-//           <Text style={styles.userText}>Mumei</Text>
-//         </View>
-//       </ScrollView>
-//     </View>
-//   );
-// }
 export default function Chat({ navigation, route }) {
+  const [socket, setSocket] = useState(null);
+  const [chats, setChats] = useState([]);
+  const [workerProfile, setWorkerProfile] = useState({});
+  const [clientProfile, setClientProfile] = useState({});
+  const [message, setMessage] = useState("");
+  const [senderId, setSenderId] = useState(null);
+  const [chatId, setChatId] = useState("");
+  const scrollViewRef = useRef();
+
+  const socketHandler = async () => {
+    try {
+      const storedRole = await SecureStore.getItemAsync("role");
+      const socketInstance = newSocket;
+      setSocket(socketInstance);
+
+      // Join the room with jobId
+      socketInstance.emit("join_room", route.params.jobId);
+
+      // Handle receiving messages
+      socketInstance.on("receive_message", (data) => {
+        setChats((curr) => [...curr, data]);
+      });
+
+      // Handle joining confirmation
+      socketInstance.on("joined_room", (data) => {
+        setChats(data.chats.contents);
+        setWorkerProfile(data.workerProfile);
+        setClientProfile(data.clientProfile);
+
+        if (storedRole === "jalu") {
+          setSenderId(data.currJob.clientId);
+        } else if (storedRole === "yasa") {
+          setSenderId(data.currJob.workerId);
+        }
+
+        setChatId(data.currJob.chatId);
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    socketHandler();
+    return () => {
+      socket?.disconnect();
+    };
+  }, []);
+
+  useEffect(() => {
+    scrollViewRef.current?.scrollToEnd({ animated: true });
+  }, [chats]);
+
+  const sendMessage = () => {
+    if (message.trim() && socket) {
+      const messageData = {
+        senderId: senderId,
+        message: message,
+        room: route.params.jobId,
+        createdAt: new Date()
+      };
+      socket.emit("send_message", messageData, chatId, senderId);
+      setMessage("");
+    }
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <Image
           source={{
-            uri: "https://pbs.twimg.com/profile_images/1761684017722847233/Oay_LeWL_400x400.jpg",
+            uri: clientProfile?.profilePicture || "https://pbs.twimg.com/profile_images/1761684017722847233/Oay_LeWL_400x400.jpg"
           }}
           style={styles.profilePic}
         />
         <View style={styles.headerText}>
-          <Text style={styles.userName}>Nanashi Mumei</Text>
-          {/* <Text style={styles.status}>Online</Text> */}
+          <Text style={styles.userName}>{clientProfile?.name || "User"}</Text>
         </View>
       </View>
 
-      <ScrollView style={styles.chatContainer}>
-        <View style={styles.messageWrapper}>
-          <Image
-            source={{
-              uri: "https://pbs.twimg.com/profile_images/1761684017722847233/Oay_LeWL_400x400.jpg",
-            }}
-            style={styles.profilePicSmall}
-          />
-          <View style={styles.incomingMessage}>
-            <Text>Hai...</Text>
-          </View>
-        </View>
-
-        <View style={styles.messageWrapper}>
-          <Image
-            source={{
-              uri: "https://pbs.twimg.com/profile_images/1761684017722847233/Oay_LeWL_400x400.jpg",
-            }}
-            style={styles.profilePicSmall}
-          />
-          <View style={styles.incomingMessage}>
-            <Text>Apa hari ini ada collab?</Text>
-          </View>
-        </View>
-
-        <View style={styles.outgoingWrapper}>
-          <View style={styles.outgoingMessage}>
-            <Text style={styles.outgoingText}>Tentu</Text>
-          </View>
-          <Image
-            source={{
-              uri: "https://yt3.googleusercontent.com/cBtserkb211p6If2OewgWd8oriIKRkfwTcP4_Vdq2YETG5TK9Q02v4cYmnLU03KBAJ0gcDha7oQ=s900-c-k-c0x00ffffff-no-rj",
-            }}
-            style={styles.profilePicSmall}
-          />
-        </View>
-
-        <View style={styles.outgoingWrapper}>
-          <View style={styles.outgoingMessage}>
-            <Text style={styles.outgoingText}>
-              Mari kita diskusikan terlebih dahulu untuk collab lebih lanjut ,
-              aku yakin kita pasti bisa menjadi idol sebenermya
-            </Text>
-          </View>
-          <Image
-            source={{
-              uri: "https://yt3.googleusercontent.com/cBtserkb211p6If2OewgWd8oriIKRkfwTcP4_Vdq2YETG5TK9Q02v4cYmnLU03KBAJ0gcDha7oQ=s900-c-k-c0x00ffffff-no-rj",
-            }}
-            style={styles.profilePicSmall}
-          />
-        </View>
+      <ScrollView style={styles.chatContainer} ref={scrollViewRef}>
+        {chats.map((chat, index) => (
+          chat.senderId === senderId ? (
+            <View key={index} style={styles.outgoingWrapper}>
+              <View style={styles.outgoingMessage}>
+                <Text style={styles.outgoingText}>{chat.message}</Text>
+              </View>
+              <Image
+                source={{ uri: workerProfile?.profilePicture }}
+                style={styles.profilePicSmall}
+              />
+            </View>
+          ) : (
+            <View key={index} style={styles.messageWrapper}>
+              <Image
+                source={{ uri: clientProfile?.profilePicture }}
+                style={styles.profilePicSmall}
+              />
+              <View style={styles.incomingMessage}>
+                <Text>{chat.message}</Text>
+              </View>
+            </View>
+          )
+        ))}
       </ScrollView>
 
       <View style={styles.inputContainer}>
-        <TextInput style={styles.input} placeholder="Ketikan pesan di sini" />
-        <TouchableOpacity style={styles.sendButton}>
-          <Text style={styles.sendButtonText}>
-            <Ionicons name="send-sharp" size={20} color="white" />
-          </Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Type a message"
+          value={message}
+          onChangeText={setMessage}
+        />
+        <TouchableOpacity style={styles.sendButton} onPress={sendMessage}>
+          <Ionicons name="send-sharp" size={20} color="white" />
         </TouchableOpacity>
       </View>
     </View>
   );
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,

@@ -55,14 +55,14 @@ export function AuthStackScreen() {
         <Stack.Screen
           name="TabScreen"
           component={TabScreen}
-          options={{ headerShown: false }}
+          options={{ headerShown: false, headerBackTitleVisible: false}}
         />
         <Stack.Screen name="CreateBebersih" component={CreateBebersih} options={{ title: "" }} />
         <Stack.Screen name="CreateNitip" component={CreateNitip} options={{ title: "" }} />
-        <Stack.Screen name="WorkerOrderDetail" component={WorkerOrderDetail} options={({ route }) => ({ title: route.params.title })} />
+        <Stack.Screen name="WorkerOrderDetail" component={WorkerOrderDetail} options={({ route }) => ({ title: route.params.title, headerBackTitleVisible: false })} />
         {/* <Stack.Screen name="" component={}></Stack.Screen> */}
         <Stack.Screen name="WorkerVerificationOrder" component={WorkerVerificationOrder} />
-        <Stack.Screen name="Chat" component={Chat} options={{ title: "Chat Room" }} />
+        <Stack.Screen name="Chat" component={Chat} options={{ title: "Chat Room", headerBackTitleVisible: false }} />
       </Stack.Navigator>
     </>
   )

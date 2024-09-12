@@ -1,7 +1,7 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import HomeWorker from "../screens/workers/HomeWorker";
-import WorkerProfile from "../screens/workers/WorkerProfile";
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import AllJobs from "../screens/workers/AllJobs";
 import AllCurrentJobs from "../screens/workers/AllCurrentJobs";
 import ProfileStack from "./ProfileStack";
@@ -60,9 +60,9 @@ export default function TabScreen(props) {
           options={{
             tabBarIcon: ({ color, size, focused }) => {
               return focused ? (
-                <Ionicons name="briefcase" size={size} color="#1E204C" />
+                <MaterialCommunityIcons name="briefcase-search" size={size} color="#1E204C" />
               ) : (
-                <Ionicons name="briefcase-outline" size={size} color="#1E204C" />
+                <MaterialCommunityIcons name="briefcase-search-outline" size={size} color="#1E204C" />
               )
             },
             tabBarShowLabel: false,
