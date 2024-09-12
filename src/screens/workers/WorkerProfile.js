@@ -180,8 +180,9 @@ export default function WorkerProfile({ navigation }) {
 
         <View style={styles.listReviewCard}>
           <Text style={styles.titleReviews}>
-            Baca Ulasan Terpercaya Dari{' '}
-            <Text style={{ color: '#05ECAE' }}>Pelanggan</Text> Kami
+            Baca Ulasan dari Para{' '}
+            <Text style={{ color: '#05ECAE' }}>Jalu</Text>
+            {' '}untuk {profile.name ? profile.name : 'Yasa'}
           </Text>
           { testi.map((val, i) => {
             return <WorkerReview key={i} review={val}/>

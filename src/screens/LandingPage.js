@@ -5,7 +5,10 @@ export default function LandingPage({ navigation }) {
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={{ fontSize: 24, fontWeight: 'bold' }}>YangTu</Text>
-        <TouchableHighlight style={styles.loginButton} onPress={() => navigation.navigate("Login")}>
+        <TouchableHighlight
+          style={styles.loginButton}
+          onPress={() => navigation.navigate('Login')}
+        >
           <Text style={{ fontSize: 16, fontWeight: '600' }}>Login</Text>
         </TouchableHighlight>
       </View>
@@ -15,18 +18,23 @@ export default function LandingPage({ navigation }) {
             Segala sesuatu yang dapat anda bayangkan adalah nyata
           </Text>
           <Text style={{ fontSize: 16, fontWeight: '300' }}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut varius
-            tortor sed ex ultrices tempus. Proin egestas commodo lorem non
-            fringilla. Praesent fermentum libero sed nibh sodales, at viverra
-            ex.
+            Model ekonomi yang didasarkan pada pekerjaan sementara, tugas-tugas
+            jangka pendek, atau kontrak pekerjaan yang fleksibel, di mana
+            individu bekerja sebagai pekerja lepas atau independen.
           </Text>
           <View
             style={{ flexDirection: 'row', gap: 16, justifyContent: 'center' }}
           >
-            <TouchableHighlight style={styles.registerButton} onPress={() => navigation.navigate("WorkerRegister")}>
+            <TouchableHighlight
+              style={styles.registerButton}
+              onPress={() => navigation.navigate('WorkerRegister')}
+            >
               <Text style={styles.registerText}>Daftar Yasa</Text>
             </TouchableHighlight>
-            <TouchableHighlight style={styles.registerButton} onPress={() => navigation.navigate("ClientRegister")}>
+            <TouchableHighlight
+              style={styles.registerButton}
+              onPress={() => navigation.navigate('ClientRegister')}
+            >
               <Text style={styles.registerText}>Daftar Jalu</Text>
             </TouchableHighlight>
           </View>
